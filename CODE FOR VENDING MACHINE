@@ -1,0 +1,144 @@
+from tabulate import tabulate #download module tabulate
+import sys
+import os
+import subprocess
+
+#create a dictionary of all the items in the vending machine in a list, categorise them
+soft_drinks=[{'ID':1,'NAME':'Fanta 150ml','PRICE':3} , 
+{'ID':2,'NAME':'Sprite 150ml','PRICE':2.5},
+{'ID':3,'NAME':'Coca Cola 150ml','PRICE':3}]
+
+chocolate=[{'ID':4,'NAME':'Cadbury Dairy Milk','PRICE':5} ,
+{'ID':5,'NAME':'Kinder Bueno Bar','PRICE':3.5},
+{'ID':6,'NAME':'KitKat','PRICE':2}]
+
+snacks=[{'ID':7,'NAME':'Cheetos Crunchy Cheese','PRICE':5} ,
+{'ID':8,'NAME':'Best Super Pistachio','PRICE':7},
+{'ID':9,'NAME':'Lay\'s Maxx','PRICE':5}]
+
+h1={} #used as header in module tabulate for soft_drinks, chocolate and snacks 
+
+def check_out():
+    print('\nCHECH OUT : \n')
+    n=len(cart)
+    list1=[]
+    for i in range(0,n):
+        list2=cart[i]['PRICE'] #list of all the prices of the items in cart
+        list1.append(list2)
+    total=0
+    for ele in range(0, len(list1)): #sum of the prices in the cart
+        total = total + list1[ele]
+    print(f'TOTAL : {total}AED')
+    inserted=float(input('\nTO CANCEL ORDER PRESS 00\nENTER THE AMOUNT YOU WILL INSERT : '))
+    if inserted==total:
+        print('\nTHANK YOU! YOUR ITEMS ARE DISPENSED\n')
+        subprocess.call([sys.executable, os.path.realpath(__file__)] + sys.argv[1:]) #used to terminate the program and restart it
+    elif inserted>total:
+        print(f'\nCHANGE RECEIVED : {inserted-total} AED \n THANK YOU!YOUR ITEMS ARE DISPENSED\n') #to calculate change
+        subprocess.call([sys.executable, os.path.realpath(__file__)] + sys.argv[1:])
+    elif inserted==00:
+        subprocess.call([sys.executable, os.path.realpath(__file__)] + sys.argv[1:])
+    else:
+        print('\nINSUFFICIENT AMOUNT\n')
+        check_out()
+
+def start():
+  m='--VENDING MACHINE--'
+  print(m.center(100)) #to align the text at the center
+  print('\nINSTRUCTIONS : ONLY USE NUMBERIC VALUES FOR INPUT\n')
+
+def menu():
+  category=[['SOFT DRINKS','1'],['CHOCOLATE','2'],['SNACKS','3']] #add category according to the items available in the vending machine
+  h2=['CATEGORY : ','PRESS NO : '] #used as header in module tabulate for category
+  print(tabulate(category,headers=h2))
+  print('\nPRESS 0 TO RESTART\n')
+
+cart=[] #cart is initially empty
+
+def crt():
+    global cart
+    print('\nYOUR CART : \n')
+    print(tabulate(cart, headers=h1)) 
+    selection_3=int(input('\nPRESS 1 TO PURHCASE ANOTHER ITEM\nPRESS 0 TO REMOVE AN ITEM FROM YOUR CART\nPRESS 2 TO CHECK OUT : '))
+    if selection_3==0:
+        del_id=int(input('\nENTER ID TO DELETE THE ITEM : '))
+        for i in cart:
+            if del_id==i['ID']:
+                print('\nITEM IS REMOVED\n')
+                cart.remove(i) #to remove the item from cart
+                break
+        else:
+            print('\nTHIS ID IS NOT IN YOUR CART\n')
+            crt()
+    elif selection_3==2:
+        check_out()
+    elif selection_3==1:
+        menu()
+        dis()
+    else:
+        print('\nINVALID ID\n')
+        crt()
+
+def purchase(a=''): #a is the parameter which will be changed 
+    selection_2=int(input('SELECT ITEM ID : '))
+    if selection_2==0:
+      menu()
+      a 
+    else:
+        while 1<=selection_2<=3:
+            for i in soft_drinks:
+                if selection_2==i['ID']:
+                  cart.append(i) #to add item in cart according to their IDs in the category
+                  crt()
+            break
+        while 4<=selection_2<=6:
+            for i in chocolate:
+                if selection_2==i['ID']:
+                  cart.append(i)
+                  crt()
+            break
+        while 7<=selection_2<=9:
+            for i in snacks:
+                if selection_2==i['ID']:
+                  cart.append(i)
+                  crt()
+            break
+        while selection_2>9:
+            print('\nINVALID ID\n')
+            purchase(a) 
+
+def suggestion(): #to give user suggestions according to the category selected
+  if selection_1==2:
+    print('\nLIKE CHOCOLATES? TRY SOME SNACKS WITH THEM\n')
+  elif selection_1==3:
+    print('\nLIKE SNACKS? TRY SOME SOFT DRINKS WITH THEM\n')
+  elif selection_1==1:
+    print('\nLIKE SOFT DRINKS? TRY SOME SNACKS WITH THEM\n')
+
+def dis():
+  global selection_1
+  selection_1=int(input('SELECT CATEGORY:'))
+  if selection_1==1: #to display the items available in the selected category
+    print(tabulate(soft_drinks, headers=h1))
+    suggestion()
+    purchase() #to add the selected item in cart
+  elif selection_1==2:
+    print(tabulate(chocolate, headers=h1))
+    suggestion()
+    purchase()
+  elif selection_1==3:
+    print(tabulate(snacks, headers=h1))
+    suggestion()
+    purchase()
+  else:
+    if selection_1<3:
+        menu()
+        dis()
+    else:
+        print('\nINVALID ID! TRY AGAIN\n')
+        menu()
+        dis()
+
+start()
+menu()
+purchase(a=dis()) #function dis() is used as argument to display the items available in the category selected; as well as to add item to cart
