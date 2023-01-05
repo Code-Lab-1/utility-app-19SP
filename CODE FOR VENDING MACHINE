@@ -45,7 +45,7 @@ def check_out():
 def start():
   m='--VENDING MACHINE--'
   print(m.center(100)) #to align the text at the center
-  print('\nINSTRUCTIONS : ONLY USE NUMBERIC VALUES FOR INPUT\n')
+  print('\nWELCOME!\nINSTRUCTIONS : ONLY USE NUMERICAL VALUES FOR INPUT\n')
 
 def menu():
   category=[['SOFT DRINKS','1'],['CHOCOLATE','2'],['SNACKS','3']] #add category according to the items available in the vending machine
@@ -59,7 +59,7 @@ def crt():
     global cart
     print('\nYOUR CART : \n')
     print(tabulate(cart, headers=h1)) 
-    selection_3=int(input('\nPRESS 1 TO PURHCASE ANOTHER ITEM\nPRESS 0 TO REMOVE AN ITEM FROM YOUR CART\nPRESS 2 TO CHECK OUT : '))
+    selection_3=int(input('\nPRESS 1 TO PURCHASE ANOTHER ITEM\nPRESS 0 TO REMOVE AN ITEM FROM YOUR CART\nPRESS 2 TO CHECK OUT : '))
     if selection_3==0:
         del_id=int(input('\nENTER ID TO DELETE THE ITEM : '))
         for i in cart:
