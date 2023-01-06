@@ -23,14 +23,19 @@ def receipt(): #to print recepit
   ques=int(input('\nPRESS 0 TO PRINT RECEPIT\nPRESS 1 TO QUIT : '))
   if ques==0:
     a='--RECEPIT--'
-    print(a.center(100))
-    dt=datetime.now()
+    print(a.center(100)) #to align text at center
+    dt=datetime.now() #using datetime module, we print the current date and time for the transaction
     print(tabulate(cart, headers=h1))
     print('\nDATE AND TIME : ',dt)
     print('\nTOTAL AMOUNT : ',total)
     print('\nAMOUNT PAID : ',inserted)
     print('\nCHANGE RECEIVED : ',inserted-total)
-
+  elif ques==1:
+    subprocess.call([sys.executable, os.path.realpath(__file__)] + sys.argv[1:]) #to restart the programme
+  else:
+    print('\nINVALID CODE!')
+    receipt()
+    
 def check_out():
     global total
     global inserted
@@ -46,11 +51,12 @@ def check_out():
     print(f'TOTAL : {total}AED')
     inserted=float(input('\nTO CANCEL ORDER PRESS 00\nENTER THE AMOUNT YOU WILL INSERT : '))
     if inserted==total:
-        receipt()
         print('\nTHANK YOU! YOUR ITEMS ARE DISPENSED\n')
+        receipt()
         subprocess.call([sys.executable, os.path.realpath(__file__)] + sys.argv[1:]) #used to terminate the program and restart it
     elif inserted>total:
         print(f'\nCHANGE RECEIVED : {inserted-total} AED') #to calculate change
+        print('\nTHANK YOU! YOUR ITEMS ARE DISPENSED\n')
         receipt()
         subprocess.call([sys.executable, os.path.realpath(__file__)] + sys.argv[1:])
     elif inserted==00:
