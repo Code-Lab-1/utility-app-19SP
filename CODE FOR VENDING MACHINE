@@ -1,4 +1,5 @@
 from tabulate import tabulate #download module tabulate
+from datetime import datetime
 import sys
 import os
 import subprocess
@@ -18,7 +19,21 @@ snacks=[{'ID':7,'NAME':'Cheetos Crunchy Cheese','PRICE':5} ,
 
 h1={} #used as header in module tabulate for soft_drinks, chocolate and snacks 
 
+def receipt(): #to print recepit
+  ques=int(input('\nPRESS 0 TO PRINT RECEPIT\nPRESS 1 TO QUIT : '))
+  if ques==0:
+    a='--RECEPIT--'
+    print(a.center(100))
+    dt=datetime.now()
+    print(tabulate(cart, headers=h1))
+    print('\nDATE AND TIME : ',dt)
+    print('\nTOTAL AMOUNT : ',total)
+    print('\nAMOUNT PAID : ',inserted)
+    print('\nCHANGE RECEIVED : ',inserted-total)
+
 def check_out():
+    global total
+    global inserted
     print('\nCHECH OUT : \n')
     n=len(cart)
     list1=[]
@@ -31,10 +46,12 @@ def check_out():
     print(f'TOTAL : {total}AED')
     inserted=float(input('\nTO CANCEL ORDER PRESS 00\nENTER THE AMOUNT YOU WILL INSERT : '))
     if inserted==total:
+        receipt()
         print('\nTHANK YOU! YOUR ITEMS ARE DISPENSED\n')
         subprocess.call([sys.executable, os.path.realpath(__file__)] + sys.argv[1:]) #used to terminate the program and restart it
     elif inserted>total:
-        print(f'\nCHANGE RECEIVED : {inserted-total} AED \n THANK YOU!YOUR ITEMS ARE DISPENSED\n') #to calculate change
+        print(f'\nCHANGE RECEIVED : {inserted-total} AED') #to calculate change
+        receipt()
         subprocess.call([sys.executable, os.path.realpath(__file__)] + sys.argv[1:])
     elif inserted==00:
         subprocess.call([sys.executable, os.path.realpath(__file__)] + sys.argv[1:])
