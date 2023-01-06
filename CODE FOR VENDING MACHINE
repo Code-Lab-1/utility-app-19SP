@@ -25,11 +25,11 @@ def receipt(): #to print receipt
     a='--RECEIPT--'
     print(a.center(100)) #to align text at center
     dt=datetime.now() #using datetime module, we print the current date and time for the transaction
+    print('\nDATE AND TIME :',dt,'\n')
     print(tabulate(cart, headers=h1))
-    print('\nDATE AND TIME : ',dt)
-    print('\nTOTAL AMOUNT : ',total)
-    print('\nAMOUNT PAID : ',inserted)
-    print('\nCHANGE RECEIVED : ',inserted-total)
+    print('\nTOTAL AMOUNT :',total,'AED')
+    print('\nAMOUNT PAID :',inserted,'AED')
+    print('\nCHANGE RECEIVED :',inserted-total,'AED')
   elif ques==1:
     subprocess.call([sys.executable, os.path.realpath(__file__)] + sys.argv[1:]) #to restart the programme
   else:
