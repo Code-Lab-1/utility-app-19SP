@@ -19,7 +19,7 @@ snacks=[{'ID':7,'NAME':'Cheetos Crunchy Cheese','PRICE':5} ,
 
 h1={} #used as header in module tabulate for soft_drinks, chocolate and snacks 
 
-def receipt(): #to print recepit
+def receipt(): #to print receipt
   ques=int(input('\nPRESS 0 TO PRINT RECEIPT\nPRESS 1 TO QUIT : '))
   if ques==0:
     a='--RECEIPT--'
