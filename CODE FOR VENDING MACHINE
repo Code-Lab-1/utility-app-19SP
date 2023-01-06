@@ -20,9 +20,9 @@ snacks=[{'ID':7,'NAME':'Cheetos Crunchy Cheese','PRICE':5} ,
 h1={} #used as header in module tabulate for soft_drinks, chocolate and snacks 
 
 def receipt(): #to print recepit
-  ques=int(input('\nPRESS 0 TO PRINT RECEPIT\nPRESS 1 TO QUIT : '))
+  ques=int(input('\nPRESS 0 TO PRINT RECEIPT\nPRESS 1 TO QUIT : '))
   if ques==0:
-    a='--RECEPIT--'
+    a='--RECEIPT--'
     print(a.center(100)) #to align text at center
     dt=datetime.now() #using datetime module, we print the current date and time for the transaction
     print(tabulate(cart, headers=h1))
