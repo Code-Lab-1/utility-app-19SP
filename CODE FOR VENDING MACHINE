@@ -89,7 +89,10 @@ def crt():
             if del_id==i['ID']:
                 print('\nITEM IS REMOVED\n')
                 cart.remove(i) #to remove the item from cart
-                break
+                print(tabulate(cart, headers=h1))
+                print('\n')
+                menu()
+                dis()
         else:
             print('\nTHIS ID IS NOT IN YOUR CART\n')
             crt()
